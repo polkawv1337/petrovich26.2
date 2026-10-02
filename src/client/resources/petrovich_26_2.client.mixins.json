@@ -1,0 +1,35 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "project.petrovich_26_2.mixin.client",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "MinecraftClientMixin",
+    "ClientCommonPacketListenerMixin",
+    "ClientPacketListenerMixin",
+    "KeyboardHandlerMixin",
+    "DeltaTrackerTimerMixin",
+    "HudMixin",
+    "ClientInputMixin",
+    "ItemInHandRendererAccessor",
+    "LivingEntityRendererMixin",
+    "LevelRendererMixin",
+    "MultiPlayerGameModeAccessor",
+    "MultiPlayerGameModeMixin",
+    "ScreenInvoker",
+    "AbstractContainerScreenAccessor",
+    "InventoryScreenMixin",
+    "MouseHandlerMixin",
+    "KeyMappingAccessor",
+    "ViaFabricButtonMixin",
+    "EditBoxMixin",
+    "ChatScreenMixin",
+    "FireworkRocketEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

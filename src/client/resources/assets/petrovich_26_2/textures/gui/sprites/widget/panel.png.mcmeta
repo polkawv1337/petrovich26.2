@@ -1,0 +1,10 @@
+{
+  "sprite": {
+    "xx_resolution": 24,
+    "nine_slice": {
+      "width": 24,
+      "height": 24,
+      "border": 8
+    }
+  }
+}
