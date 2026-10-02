@@ -1,4 +1,4 @@
 package client_files.Petrovich.Render;
 
-public class Cosmetics {
+public class Bassss {
 }
