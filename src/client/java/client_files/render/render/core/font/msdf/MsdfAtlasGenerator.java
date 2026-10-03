@@ -49,17 +49,7 @@ public final class MsdfAtlasGenerator {
     }
 
     public static String familyToFile(String family) {
-        if (family == null) return "inter.ttf";
-        String f = family.trim().toLowerCase().replace(" ", "_").replace("-", "_");
-        return switch (f) {
-            case "roboto" -> "roboto.ttf";
-            case "poppins" -> "poppins.ttf";
-            case "montserrat" -> "montserrat.ttf";
-            case "opensans", "open_sans" -> "opensans.ttf";
-            case "jetbrains_mono", "jetbrainsmono" -> "jetbrains_mono.ttf";
-            case "firacode", "fira_code" -> "firacode.ttf";
-            default -> "inter.ttf";
-        };
+        return "inter.ttf";
     }
 
     private static Font tryLoad(String file) {
@@ -204,7 +194,7 @@ public final class MsdfAtlasGenerator {
             g.setFont(font);
             applyHints(g);
             g.setColor(java.awt.Color.WHITE);
-            g.drawString(String.valueOf(c), PAD - minX, PAD - minY);
+            g.drawString(String.valueOf(c), origin + PAD - minX, origin + PAD - minY);
             g.dispose();
 
             int inkX = minX - origin;

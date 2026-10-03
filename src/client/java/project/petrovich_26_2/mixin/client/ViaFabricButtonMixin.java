@@ -1,11 +1,13 @@
 package project.petrovich_26_2.mixin.client;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 
+@Pseudo
 @Mixin(targets = "com.viaversion.fabric.ViaFabricClient")
 public class ViaFabricButtonMixin {
 

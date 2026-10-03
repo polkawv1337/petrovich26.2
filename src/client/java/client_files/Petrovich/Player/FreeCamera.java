@@ -55,6 +55,7 @@ public class FreeCamera extends Module {
 
         GameProfile profile = new GameProfile(UUID.randomUUID(), mc.player.getName().getString());
         fakePlayer = new RemotePlayer(mc.level, profile);
+        fakePlayer.setId(-1);
         fakePlayer.setPos(frozenPos.x, frozenPos.y, frozenPos.z);
         fakePlayer.setYRot(frozenYaw);
         fakePlayer.setXRot(frozenPitch);

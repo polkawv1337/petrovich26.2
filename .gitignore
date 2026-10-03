@@ -1,0 +1,15 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# Loom / Minecraft dev run directory
+run/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Logs and local artifacts
+*.log
+*.hprof
