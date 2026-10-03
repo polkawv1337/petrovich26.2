@@ -1,6 +1,7 @@
 package client_files.render.render.core.font.msdf;
 
 import client_files.render.render.core.color.ColorRGBA;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -61,6 +62,7 @@ public final class MsdfFontRenderer {
         Face base = face(family);
         if (base == null) return;
 
+        float unit = guiPixelUnit();
         float penX = x;
         int defaultCol = color.packed();
         int activeCol = defaultCol;
@@ -84,32 +86,54 @@ public final class MsdfFontRenderer {
             }
 
             MsdfGlyph g = font.glyphFor(c);
-            if (g.w() > 0 && g.h() > 0 && c != ' ') {
-                float dw = g.w() * scale;
-                float dh = g.h() * scale;
+            if (g.w() > 0 && g.h() > 0 && c != ' ' && f.texture() != null) {
                 float dx = penX + g.offsetX() * scale;
-                float dy = (y + font.getAscender() * scale) + g.offsetY() * scale;
-                if (dw >= 1.0f && dh >= 1.0f && f.texture() != null) {
-                    extractor.blit(
-                            RenderPipelines.GUI_TEXTURED,
-                            f.texture(),
-                            Math.round(dx),
-                            Math.round(dy),
-                            (float) g.u(),
-                            (float) g.v(),
-                            Math.max(1, Math.round(dw)),
-                            Math.max(1, Math.round(dh)),
-                            g.w(),
-                            g.h(),
-                            f.texWidth(),
-                            f.texHeight(),
-                            activeCol
-                    );
-                }
+                float dy = y + font.getAscender() * scale + g.offsetY() * scale;
+
+                float x0 = snap(dx, unit);
+                float y0 = snap(dy, unit);
+                float x1 = snap(dx + g.w() * scale, unit);
+                float y1 = snap(dy + g.h() * scale, unit);
+                float dw = Math.max(x1 - x0, unit);
+                float dh = Math.max(y1 - y0, unit);
+
+                var pose = extractor.pose();
+                pose.pushMatrix();
+                pose.translate(x0, y0);
+                pose.scale(dw / g.w(), dh / g.h());
+                extractor.blit(
+                        RenderPipelines.GUI_TEXTURED,
+                        f.texture(),
+                        0,
+                        0,
+                        (float) g.u(),
+                        (float) g.v(),
+                        g.w(),
+                        g.h(),
+                        g.w(),
+                        g.h(),
+                        f.texWidth(),
+                        f.texHeight(),
+                        activeCol
+                );
+                pose.popMatrix();
             }
             penX += g.advance() * scale;
             prev = c;
         }
+    }
+
+    private static float snap(float value, float unit) {
+        return Math.round(value / unit) * unit;
+    }
+
+    private static float guiPixelUnit() {
+        try {
+            int scale = Minecraft.getInstance().getWindow().getGuiScale();
+            if (scale > 0) return 1.0f / scale;
+        } catch (Throwable ignored) {
+        }
+        return 1.0f;
     }
 
     private Face face(String family) {
